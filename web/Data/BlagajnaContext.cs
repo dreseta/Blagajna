@@ -1,0 +1,34 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using web.Models;
+
+namespace web.Data
+{
+
+    public class BlagajnaContext : IdentityDbContext<ApplicationUser>
+    {
+        public BlagajnaContext(DbContextOptions<BlagajnaContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Budget> Budgets { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Budget>().ToTable("Budget");
+            modelBuilder.Entity<Category>().ToTable("Catrgory");
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetProperties())
+                .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
+            {
+                property.SetColumnType("decimal(18,2)");
+            }
+        }
+    }
+}

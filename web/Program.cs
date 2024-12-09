@@ -1,9 +1,32 @@
+using web.Data;
+using web.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// nastavi spremenljivko connectionString za .useSqlServer(connectionString)
+var connectionString = builder.Configuration.GetConnectionString("BlagajnaContext");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// nadomesti stari .AddDbContext
+builder.Services.AddDbContext<BlagajnaContext>(options =>
+            options.UseSqlServer(connectionString));
+
+// prilagodi RequireConfirmedAccount = false in .AddRoles<IdentityRole>()
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<BlagajnaContext>();
 var app = builder.Build();
+
+// Seed database using DbInitializer 
+// using(var scope = app.Services.CreateScope())
+// {
+//     var context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
+//     DbInitializer.Initialize(context);
+// }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -18,7 +41,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.MapRazorPages();
 app.UseAuthorization();
+// dodaj app.MapRazorPages(); (npr. za app.useAuthentication())
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
