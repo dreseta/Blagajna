@@ -144,6 +144,7 @@ namespace web.Data
             {
             new IdentityUserRole<string>{RoleId = roles[0].Id, UserId=user.Id},
             new IdentityUserRole<string>{RoleId = roles[1].Id, UserId=user.Id},
+            };
 
             if (!context.UserRoles.Any())
             {
