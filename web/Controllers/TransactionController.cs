@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using web.Data;
 using web.Models;
 
@@ -13,17 +15,18 @@ namespace web.Controllers
     public class TransactionController : Controller
     {
         private readonly BlagajnaContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TransactionController(BlagajnaContext context)
+        public TransactionController(BlagajnaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            var blagajnaContext = _context.Transactions.Include(t => t.Category).Include(t => t.User);
-            return View(await blagajnaContext.ToListAsync());
+            return View(await _context.Transactions.ToListAsync());
         }
 
         // GET: Transaction/Details/5
@@ -35,8 +38,6 @@ namespace web.Controllers
             }
 
             var transaction = await _context.Transactions
-                .Include(t => t.Category)
-                .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transaction == null)
             {
@@ -49,8 +50,6 @@ namespace web.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -59,16 +58,15 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,Date,Description,CategoryId,UserId")] Transaction transaction)
+        public async Task<IActionResult> Create([Bind("Id,Amount,Date,Description")] Transaction transaction)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
-            {
+            {   transaction.User = currentUser;
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", transaction.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", transaction.UserId);
             return View(transaction);
         }
 
@@ -85,8 +83,6 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", transaction.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", transaction.UserId);
             return View(transaction);
         }
 
@@ -95,7 +91,7 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,Date,Description,CategoryId,UserId")] Transaction transaction)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,Date,Description")] Transaction transaction)
         {
             if (id != transaction.Id)
             {
@@ -122,8 +118,6 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", transaction.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", transaction.UserId);
             return View(transaction);
         }
 
@@ -136,8 +130,6 @@ namespace web.Controllers
             }
 
             var transaction = await _context.Transactions
-                .Include(t => t.Category)
-                .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transaction == null)
             {

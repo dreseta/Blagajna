@@ -11,11 +11,7 @@ public class Budget
 
     public required DateTime EndDate { get; set; }
 
-    // Foreign key to Category
-    public required int CategoryId { get; set; }
-    public required Category Category { get; set; }
+    public Category? Category { get; set; }
 
-    // Foreign key to User
-    public string? UserId { get; set; }
     public ApplicationUser? User { get; set; }
 }

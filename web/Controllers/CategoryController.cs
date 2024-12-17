@@ -22,8 +22,7 @@ namespace web.Controllers
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            var blagajnaContext = _context.Categories.Include(c => c.User);
-            return View(await blagajnaContext.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
         // GET: Category/Details/5
@@ -35,7 +34,6 @@ namespace web.Controllers
             }
 
             var category = await _context.Categories
-                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -48,7 +46,6 @@ namespace web.Controllers
         // GET: Category/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -57,7 +54,7 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,UserId")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +62,6 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", category.UserId);
             return View(category);
         }
 
@@ -82,7 +78,6 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", category.UserId);
             return View(category);
         }
 
@@ -91,7 +86,7 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,UserId")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category)
         {
             if (id != category.Id)
             {
@@ -118,7 +113,6 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", category.UserId);
             return View(category);
         }
 
@@ -131,7 +125,6 @@ namespace web.Controllers
             }
 
             var category = await _context.Categories
-                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {

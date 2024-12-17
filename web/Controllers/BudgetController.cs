@@ -22,8 +22,7 @@ namespace web.Controllers
         // GET: Budget
         public async Task<IActionResult> Index()
         {
-            var blagajnaContext = _context.Budgets.Include(b => b.Category).Include(b => b.User);
-            return View(await blagajnaContext.ToListAsync());
+            return View(await _context.Budgets.ToListAsync());
         }
 
         // GET: Budget/Details/5
@@ -35,8 +34,6 @@ namespace web.Controllers
             }
 
             var budget = await _context.Budgets
-                .Include(b => b.Category)
-                .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (budget == null)
             {
@@ -49,8 +46,6 @@ namespace web.Controllers
         // GET: Budget/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -59,7 +54,7 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,StartDate,EndDate,CategoryId,UserId")] Budget budget)
+        public async Task<IActionResult> Create([Bind("Id,Amount,StartDate,EndDate")] Budget budget)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +62,6 @@ namespace web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", budget.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", budget.UserId);
             return View(budget);
         }
 
@@ -85,8 +78,6 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", budget.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", budget.UserId);
             return View(budget);
         }
 
@@ -95,7 +86,7 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,StartDate,EndDate,CategoryId,UserId")] Budget budget)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,StartDate,EndDate")] Budget budget)
         {
             if (id != budget.Id)
             {
@@ -122,8 +113,6 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", budget.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", budget.UserId);
             return View(budget);
         }
 
@@ -136,8 +125,6 @@ namespace web.Controllers
             }
 
             var budget = await _context.Budgets
-                .Include(b => b.Category)
-                .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (budget == null)
             {

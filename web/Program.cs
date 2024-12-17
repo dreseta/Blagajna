@@ -22,11 +22,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 var app = builder.Build();
 
 // Seed database using DbInitializer 
-// using(var scope = app.Services.CreateScope())
-// {
-//     var context = scope.ServiceProvider.GetRequiredService<SchoolContext>();
-//     DbInitializer.Initialize(context);
-// }
+using(var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<BlagajnaContext>();
+    DbInitializer.Initialize(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
