@@ -39,6 +39,7 @@ namespace web.Controllers
 
             var transaction = await _context.Transactions
                 .Include(t => t.Category)
+                .Include(t => t.User)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
 
