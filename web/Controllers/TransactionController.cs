@@ -38,7 +38,10 @@ namespace web.Controllers
             }
 
             var transaction = await _context.Transactions
+                .Include(t => t.Category)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (transaction == null)
             {
                 return NotFound();
@@ -62,7 +65,8 @@ namespace web.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
-            {   transaction.User = currentUser;
+            {
+                transaction.User = currentUser;
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
