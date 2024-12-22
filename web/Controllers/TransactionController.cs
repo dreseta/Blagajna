@@ -12,6 +12,8 @@ using web.Models;
 
 namespace web.Controllers
 {
+    [Authorize]
+
     public class TransactionController : Controller
     {
         private readonly BlagajnaContext _context;
@@ -23,10 +25,18 @@ namespace web.Controllers
             _userManager = userManager;
         }
 
-        // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transactions.ToListAsync());
+        var currentUser = await _userManager.GetUserAsync(User);
+
+            
+
+            // Filtrirajte transakcije glede na trenutnega uporabnika
+            var userTransactions = await _context.Transactions
+                .Where(t => t.User.Id == currentUser.Id)  // Filtriranje transakcij po uporabniku
+                .ToListAsync();
+
+            return View(userTransactions);  // Pošljite filtrirane transakcije v pogled
         }
 
         // GET: Transaction/Details/5
