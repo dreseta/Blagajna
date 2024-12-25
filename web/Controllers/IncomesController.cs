@@ -27,7 +27,14 @@ namespace web.Controllers
         // GET: Incomes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Incomes.ToListAsync());
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Filtrirajte transakcije glede na trenutnega uporabnika
+            var userIncomes = await _context.Incomes
+                .Where(t => t.User.Id == currentUser.Id)  // Filtriranje transakcij po uporabniku
+                .ToListAsync();
+
+            return View(userIncomes);
         }
 
         // GET: Incomes/Details/5
@@ -61,7 +68,7 @@ namespace web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Amount,Date")] Income income)
         {
-             var currentUser = await _userManager.GetUserAsync(User);
+            var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
 

@@ -28,22 +28,38 @@ public class HomeController : Controller
 
             if (currentUser != null)
             {
-                var userTransactions = _context.Transactions.Where(t => t.User.Id == currentUser.Id).ToList();
+                var currentMonth = DateTime.Now.Month;
+                var currentYear = DateTime.Now.Year;
 
-                int totalTransactions = userTransactions.Count();
+                // Pridobimo transakcije trenutnega uporabnika za trenutni mesec
+                var userTransactions = _context.Transactions
+                                            .Where(t => t.User.Id == currentUser.Id &&
+                                                        t.Date.Month == currentMonth &&
+                                                        t.Date.Year == currentYear)
+                                            .ToList();
+
                 decimal totalAmount = userTransactions.Sum(t => t.Amount);
 
-                decimal balance = 1800 - totalAmount;
-                int saved = totalTransactions * 5;
+                // Pridobimo prihodke trenutnega uporabnika za trenutni mesec
+                var userIncomes = _context.Incomes
+                                        .Where(i => i.User.Id == currentUser.Id &&
+                                                    i.Date.Month == currentMonth &&
+                                                    i.Date.Year == currentYear)
+                                        .ToList();
 
+                decimal totalIncome = userIncomes.Sum(i => i.Amount);
+                
+                decimal saved = 0;
+                // Izračun stanja in prihrankov
+                decimal balance = totalIncome - totalAmount - saved;
+
+                // Shranimo izračune v ViewData za prikaz v View
                 ViewData["saved"] = saved;
                 ViewData["balance"] = balance - saved;
                 ViewData["TotalAmount"] = totalAmount;
-                ViewData["TotalTransactions"] = totalTransactions;
             }
             else
             {
-                ViewData["TotalTransactions"] = 0;
                 ViewData["TotalAmount"] = 0;
                 ViewData["balance"] = 0;
                 ViewData["saved"] = 0;
