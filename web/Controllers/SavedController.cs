@@ -13,33 +13,22 @@ using web.Models;
 namespace web.Controllers
 {
     [Authorize]
-
-    public class IncomesController : Controller
+    public class SavedController : Controller
     {
         private readonly BlagajnaContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-
-        public IncomesController(BlagajnaContext context, UserManager<ApplicationUser> userManager)
+        public SavedController(BlagajnaContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: Incomes
+        // GET: Saved
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            // Filtrirajte transakcije glede na trenutnega uporabnika
-            var userIncomes = await _context.Incomes
-                .Where(t => t.User.Id == currentUser.Id)  // Filtriranje transakcij po uporabniku
-                .ToListAsync();
-
-            return View(userIncomes);
+            return View(await _context.SavedMoney.ToListAsync());
         }
 
-        // GET: Incomes/Details/5
+        // GET: Saved/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,45 +36,39 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var income = await _context.Incomes
+            var saved = await _context.SavedMoney
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (income == null)
+            if (saved == null)
             {
                 return NotFound();
             }
 
-            return View(income);
+            return View(saved);
         }
 
-        // GET: Incomes/Create
+        // GET: Saved/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Incomes/Create
+        // POST: Saved/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,Date")] Income income)
+        public async Task<IActionResult> Create([Bind("Id,Amount,Date")] Saved saved)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
-
-                // Dodeli uporabnika
-                income.User = currentUser;
-
-                    // Shrani Income
-                _context.Add(income);
+                _context.Add(saved);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(income);
+            return View(saved);
         }
 
-        // GET: Incomes/Edit/5
+        // GET: Saved/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,22 +76,22 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var income = await _context.Incomes.FindAsync(id);
-            if (income == null)
+            var saved = await _context.SavedMoney.FindAsync(id);
+            if (saved == null)
             {
                 return NotFound();
             }
-            return View(income);
+            return View(saved);
         }
 
-        // POST: Incomes/Edit/5
+        // POST: Saved/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,Date")] Income income)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,Date")] Saved saved)
         {
-            if (id != income.Id)
+            if (id != saved.Id)
             {
                 return NotFound();
             }
@@ -117,12 +100,12 @@ namespace web.Controllers
             {
                 try
                 {
-                    _context.Update(income);
+                    _context.Update(saved);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IncomeExists(income.Id))
+                    if (!SavedExists(saved.Id))
                     {
                         return NotFound();
                     }
@@ -133,10 +116,10 @@ namespace web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(income);
+            return View(saved);
         }
 
-        // GET: Incomes/Delete/5
+        // GET: Saved/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,34 +127,34 @@ namespace web.Controllers
                 return NotFound();
             }
 
-            var income = await _context.Incomes
+            var saved = await _context.SavedMoney
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (income == null)
+            if (saved == null)
             {
                 return NotFound();
             }
 
-            return View(income);
+            return View(saved);
         }
 
-        // POST: Incomes/Delete/5
+        // POST: Saved/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var income = await _context.Incomes.FindAsync(id);
-            if (income != null)
+            var saved = await _context.SavedMoney.FindAsync(id);
+            if (saved != null)
             {
-                _context.Incomes.Remove(income);
+                _context.SavedMoney.Remove(saved);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IncomeExists(int id)
+        private bool SavedExists(int id)
         {
-            return _context.Incomes.Any(e => e.Id == id);
+            return _context.SavedMoney.Any(e => e.Id == id);
         }
     }
 }
