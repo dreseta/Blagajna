@@ -49,13 +49,20 @@ public class HomeController : Controller
 
                 decimal totalIncome = userIncomes.Sum(i => i.Amount);
                 
-                decimal saved = 0;
+                var userSavedMoney = _context.SavedMoney
+                                .Where(s => s.User.Id == currentUser.Id &&
+                                            s.Date.Month == currentMonth &&
+                                            s.Date.Year == currentYear)
+                                .ToList();
+
+                decimal totalSaved = userSavedMoney.Sum(s => s.Amount);
+
                 // Izračun stanja in prihrankov
-                decimal balance = totalIncome - totalAmount - saved;
+                decimal balance = totalIncome - totalAmount - totalSaved;
 
                 // Shranimo izračune v ViewData za prikaz v View
-                ViewData["saved"] = saved;
-                ViewData["balance"] = balance - saved;
+                ViewData["saved"] = totalSaved;
+                ViewData["balance"] = balance - totalSaved;
                 ViewData["TotalAmount"] = totalAmount;
             }
             else

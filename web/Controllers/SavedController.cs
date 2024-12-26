@@ -16,16 +16,21 @@ namespace web.Controllers
     public class SavedController : Controller
     {
         private readonly BlagajnaContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SavedController(BlagajnaContext context)
+
+        public SavedController(BlagajnaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Saved
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SavedMoney.ToListAsync());
+            var currentUser = await _userManager.GetUserAsync(User);
+            var savedMoney = _context.SavedMoney.Where(s => s.User == currentUser); // Filter by user
+            return View(await savedMoney.ToListAsync());
         }
 
         // GET: Saved/Details/5
@@ -59,13 +64,18 @@ namespace web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Amount,Date")] Saved saved)
         {
+             var currentUser = await _userManager.GetUserAsync(User);
+
             if (ModelState.IsValid)
             {
+                // Associate the saved entity with the current user
+                saved.User = currentUser;
+
                 _context.Add(saved);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(saved);
+            return View(saved); 
         }
 
         // GET: Saved/Edit/5
