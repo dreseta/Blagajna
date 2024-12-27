@@ -22,7 +22,10 @@ namespace web.Controllers
             {
                 "Transactions",
                 "Categories",
-                "ApplicationUsers"
+                "ApplicationUsers",
+                "SavedMoney",
+                "Budgets",
+                "Incomes"
             };
 
             if (string.IsNullOrEmpty(tableName))
@@ -37,11 +40,20 @@ namespace web.Controllers
                     data = _context.Transactions.Include(t => t.Category).Include(t => t.User).ToList();
                     break;
                 case "Categories":
-                    data = _context.Categories.ToList();
+                    data = _context.Categories.Include(t => t.User).ToList();
                     break;
                 case "ApplicationUsers":
                     data = _context.Users.ToList();
                     break;
+                case "SavedMoney":
+                    data = _context.SavedMoney.Include(t => t.User).ToList();
+                    break;
+                case "Budgets":
+                    data = _context.Budgets.Include(t => t.User).ToList();
+                    break;
+                case "Incomes":
+                    data = _context.Incomes.Include(t => t.User).ToList();
+                    break;    
                 default:
                     return NotFound();
             }
