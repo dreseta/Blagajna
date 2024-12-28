@@ -22,15 +22,25 @@ body {
   background-color: #ffb300;
 }
 
+.main-container {
+  display: flex;
+  flex-wrap: wrap; /* Elementi se prilagodijo v dve vrstici */
+  justify-content: center; /* Poravnava na sredino vodoravno */
+  align-items: center; /* Poravnava na sredino navpično */
+  gap: 20px; /* Razmik med elementi */
+  margin-top: 10px; /* Prostor nad kontejnerjem */
+}
+
+/* Prilagodimo obstoječi slog */
 .main-box {
-  padding: 20px;
-  float: left; 
-  display: flex; 
-  flex-direction: column; 
-  width: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 350px; /* Fiksna širina za boljšo poravnavo */
   background-color: aliceblue;
   text-align: center;
   border-radius: 30px;
-  font-size: 30px;
-  margin: 70px;
+  font-size: 25px;
+  margin: 10px; /* Manjši razmik, saj gap ureja razmik med elementi */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Dodaten vizualni učinek */
 }
