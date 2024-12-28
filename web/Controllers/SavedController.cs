@@ -69,6 +69,8 @@ namespace web.Controllers
             if (ModelState.IsValid)
             {
                 // Associate the saved entity with the current user
+                saved.Date = DateTime.Now; // Nastavite trenutni datum
+
                 saved.User = currentUser;
 
                 _context.Add(saved);

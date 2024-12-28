@@ -75,7 +75,10 @@ namespace web.Controllers
             {
 
                 // Dodeli uporabnika
+               // Nastavite trenutni datum
+
                 income.User = currentUser;
+                income.Date = DateTime.Now;
 
                     // Shrani Income
                 _context.Add(income);
