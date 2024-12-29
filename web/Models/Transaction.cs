@@ -12,8 +12,10 @@ public class Transaction
 
     public string? Description { get; set; }
 
-    public Category? Category { get; set; }
+    public int CategoryId { get; set; }
 
+    public Category? Category { get; set; }
+    
     public ApplicationUser? User { get; set; }
 
 }
