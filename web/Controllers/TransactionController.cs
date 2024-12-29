@@ -77,6 +77,7 @@ namespace web.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
+                transaction.Date = DateTime.Now;
                 transaction.User = currentUser;
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
