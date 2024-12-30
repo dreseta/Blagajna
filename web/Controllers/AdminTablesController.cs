@@ -37,7 +37,14 @@ namespace web.Controllers
             switch (tableName)
             {
                 case "Transactions":
-                    data = _context.Transactions.Include(t => t.Category).Include(t => t.User).ToList();
+                    data = _context.Transactions.Include(t => t.Category).Include(t => t.User).Select(t => new
+                    {
+                        t.Id,
+                        t.Amount,
+                        Category = t.Category != null ? t.Category.Name : "Ni kategorije",
+                        User = t.User != null ? t.User.UserName : "Ni uporabnika",
+                        t.Date
+                    }).ToList();
                     break;
                 case "Categories":
                     data = _context.Categories.Include(t => t.User).ToList();
