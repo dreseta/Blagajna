@@ -14,6 +14,8 @@ namespace web.Data
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Income> Incomes { get; set; }
+        public DbSet<Saved> SavedMoney { get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +24,8 @@ namespace web.Data
             modelBuilder.Entity<Budget>().ToTable("Budget");
             modelBuilder.Entity<Category>().ToTable("Catrgory");
             modelBuilder.Entity<Transaction>().ToTable("Transaction");
+            modelBuilder.Entity<Income>().ToTable("Income");
+            modelBuilder.Entity<Saved>().ToTable("Saved");
 
             foreach (var property in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetProperties())

@@ -7,18 +7,35 @@
     <p>MAKE SAVING MONEY FUN</p>
 </div>
 
-<div class="main-box">
-    <p class="cont-text">SAVED THIS MONTH</p>
-    <br>
-    <p class="cont-ammount">@ViewData["saved"] €</p>
-</div>
-<div class="main-box">
-    <p class="cont-text">SPENT THIS MONTH</p>
-    <br>
-    <p class="cont-ammount">@ViewData["TotalAmount"] €</p>
-</div>
-<div class="main-box">
-    <p class="cont-text">BALANCE</p>
-    <br>
-    <p class="cont-ammount">@ViewData["balance"] €</p>
+<div class="main-container">
+    <div class="main-box">
+        <p class="cont-text">SAVED THIS MONTH</p>
+        <br>
+        <p class="cont-ammount">@ViewData["savedThisMonth"] €</p>
+    </div>
+    <div class="main-box">
+        <p class="cont-text">SPENT THIS MONTH</p>
+        <br>
+        <p class="cont-ammount">@ViewData["spentThisMonth"] €</p>
+    </div>
+    <div class="main-box">
+        <p class="cont-text">BALANCE</p>
+        <br>
+        <p class="cont-ammount">@ViewData["totalBalance"] €</p>
+    </div>
+    <div class="main-box">
+        <p class="cont-text">ALL SAVINGS</p>
+        <br>
+        <p class="cont-ammount">@ViewData["totalSaved"] €</p>
+    </div>  
+    <div class="main-box">
+        <p class="cont-text">BUDGET FOR THIS MONTH</p>
+        <br>
+        <p class="cont-ammount">@ViewData["thisMonthBudget"] €</p>
+    </div>
+    <div class="main-box">
+        <p class="cont-text">MONTHLY BALANCE</p>
+        <br>
+        <p class="cont-ammount">@ViewData["LeftInBudget"] €</p>
+    </div>
 </div>

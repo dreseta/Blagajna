@@ -57,13 +57,13 @@ namespace web.Controllers
             {
                 return NotFound();
             }
-
             return View(transaction);
         }
 
         // GET: Transaction/Create
         public IActionResult Create()
         {
+            ViewData["Categories"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
@@ -72,16 +72,21 @@ namespace web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Amount,Date,Description")] Transaction transaction)
+        public async Task<IActionResult> Create([Bind("Amount,Date,Description,CategoryId")] Transaction transaction)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
+                transaction.Category = await _context.Categories.FindAsync(transaction.CategoryId);
+                
+                transaction.Description = transaction.Category.Name;
+                transaction.Date = DateTime.Now;
                 transaction.User = currentUser;
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Categories"] = new SelectList(_context.Categories, "Id", "Name", transaction.CategoryId);
             return View(transaction);
         }
 
