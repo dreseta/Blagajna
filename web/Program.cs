@@ -36,12 +36,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.MapRazorPages();
+app.UseAuthentication();
 app.UseAuthorization();
 // dodaj app.MapRazorPages(); (npr. za app.useAuthentication())
 app.MapRazorPages();

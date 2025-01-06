@@ -58,21 +58,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-<<<<<<< HEAD
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/AdminTables/SelectTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5UYWJsZXNcU2VsZWN0VGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/AdminTables/TableView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5UYWJsZXNcVGFibGVWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Budget/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVkZ2V0XENyZWF0ZS5jc2h0bWw=
-=======
-[/Users/davidreseta/Blagajna/web/Views/AdminTables/SelectTable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5UYWJsZXMvU2VsZWN0VGFibGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/AdminTables/TableView.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW5UYWJsZXMvVGFibGVWaWV3LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Budget/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQnVkZ2V0L0NyZWF0ZS5jc2h0bWw=
->>>>>>> myBranch
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Budget/Delete.cshtml]
@@ -119,53 +114,48 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-<<<<<<< HEAD
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Incomes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jb21lc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Incomes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jb21lc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Incomes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jb21lc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Incomes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jb21lc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Incomes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jb21lc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Saved/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2ZWRcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Saved/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2ZWRcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Saved/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2ZWRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Saved/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2ZWRcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Saved/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2ZWRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
-=======
-[/Users/davidreseta/Blagajna/web/Views/Incomes/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jb21lcy9DcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Incomes/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jb21lcy9EZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Incomes/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jb21lcy9EZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Incomes/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jb21lcy9FZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Incomes/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5jb21lcy9JbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Saved/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2F2ZWQvQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Saved/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2F2ZWQvRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Saved/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2F2ZWQvRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Saved/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2F2ZWQvRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Saved/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2F2ZWQvSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/davidreseta/Blagajna/web/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
->>>>>>> myBranch
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/gaspe/FRI/IS_net/Blagajna/Blagajna/web/Views/Shared/_LoginPartial.cshtml]
