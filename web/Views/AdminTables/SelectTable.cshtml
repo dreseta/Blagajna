@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Izberite Tabelo";
+}
+
+<h2>Izberite Tabelo</h2>
+
+<form asp-action="Index" method="get">
+    <select name="tableName" class="form-control">
+        @foreach (var table in ViewBag.Tables as List<string>)
+        {
+            <option value="@table">@table</option>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary mt-3">Prikaži</button>
+</form>

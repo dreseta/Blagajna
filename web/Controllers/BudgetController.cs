@@ -4,25 +4,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
 
 namespace web.Controllers
 {
+    [Authorize]
     public class BudgetController : Controller
     {
         private readonly BlagajnaContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BudgetController(BlagajnaContext context)
+
+        public BudgetController(BlagajnaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Budget
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Budgets.ToListAsync());
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var userBudgets = await _context.Budgets
+                .Where(t => t.User.Id == currentUser.Id)  // Filtriranje transakcij po uporabniku
+                .ToListAsync();
+
+            return View(userBudgets);
         }
 
         // GET: Budget/Details/5
@@ -56,8 +69,13 @@ namespace web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Amount,StartDate,EndDate")] Budget budget)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
+
+                // Dodeli uporabnika
+                budget.User = currentUser;
+
                 _context.Add(budget);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

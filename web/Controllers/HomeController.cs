@@ -28,25 +28,77 @@ public class HomeController : Controller
 
             if (currentUser != null)
             {
-                var userTransactions = _context.Transactions.Where(t => t.User.Id == currentUser.Id).ToList();
+                var currentMonth = DateTime.Now.Month;
+                var currentYear = DateTime.Now.Year;
 
-                int totalTransactions = userTransactions.Count();
-                decimal totalAmount = userTransactions.Sum(t => t.Amount);
+                // Pridobimo transakcije trenutnega uporabnika za trenutni mesec
+                var userTransactions = _context.Transactions
+                                            .Where(t => t.User.Id == currentUser.Id &&
+                                                        t.Date.Month == currentMonth &&
+                                                        t.Date.Year == currentYear)
+                                            .ToList();
 
-                decimal balance = 1800 - totalAmount;
-                int saved = totalTransactions * 5;
+                decimal spentThisMonth = userTransactions.Sum(t => t.Amount);
 
-                ViewData["saved"] = saved;
-                ViewData["balance"] = balance - saved;
-                ViewData["TotalAmount"] = totalAmount;
-                ViewData["TotalTransactions"] = totalTransactions;
+                // Pridobimo prihodke trenutnega uporabnika za trenutni mesec
+                var userIncomes = _context.Incomes
+                                        .Where(i => i.User.Id == currentUser.Id &&
+                                                    i.Date.Month == currentMonth &&
+                                                    i.Date.Year == currentYear)
+                                        .ToList();
+
+                decimal thisMonthIncome = userIncomes.Sum(i => i.Amount);
+                
+                var userSavedMoney = _context.SavedMoney
+                                .Where(s => s.User.Id == currentUser.Id &&
+                                            s.Date.Month == currentMonth &&
+                                            s.Date.Year == currentYear)
+                                .ToList();
+
+                decimal savedThisMonth = userSavedMoney.Sum(s => s.Amount);
+
+                var userBudget = _context.Budgets
+                                .Where(s => s.User.Id == currentUser.Id &&
+                                            s.StartDate.Month == currentMonth &&
+                                            s.StartDate.Year == currentYear)
+                                .ToList();
+
+                decimal thisMonthBudget = userBudget.Sum(s => s.Amount);
+
+                decimal budgetBalance = thisMonthBudget - spentThisMonth - savedThisMonth;
+
+                // Izračun stanja in prihrankov
+                decimal totalSaved = _context.SavedMoney
+                                      .Where(s => s.User.Id == currentUser.Id)
+                                      .Sum(s => s.Amount);
+
+                decimal totalIncome = _context.Incomes
+                                       .Where(i => i.User.Id == currentUser.Id)
+                                       .Sum(i => i.Amount);
+
+                decimal totalSpent = _context.Transactions
+                                     .Where(t => t.User.Id == currentUser.Id)
+                                     .Sum(t => t.Amount);
+
+                decimal totalBalance = totalIncome - totalSpent - totalSaved;
+
+                // Shranimo izračune v ViewData za prikaz v View
+                ViewData["savedThisMonth"] = savedThisMonth;
+                ViewData["totalbalance"] = totalBalance;
+                ViewData["spentThisMonth"] = spentThisMonth;
+                ViewData["thisMonthBudget"] = thisMonthBudget;
+                ViewData["LeftInBudget"] = budgetBalance;
+                ViewData["totalSaved"] = totalSaved;
             }
             else
             {
-                ViewData["TotalTransactions"] = 0;
-                ViewData["TotalAmount"] = 0;
-                ViewData["balance"] = 0;
-                ViewData["saved"] = 0;
+                ViewData["savedThisMonth"] = 0;
+                ViewData["totalbalance"] = 0;
+                ViewData["spentThisMonth"] = 0;
+                ViewData["thisMonthBudget"] = 0;
+                ViewData["LeftInBudget"] = 0;
+                ViewData["totalSaved"] = 0;
+
             }
         return View();
     }

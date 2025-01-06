@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace web.Models;
-public class Transaction
+public class Saved
 {
     public int Id { get; set; }
 
@@ -10,12 +10,6 @@ public class Transaction
 
     public required DateTime Date { get; set; }
 
-    public string? Description { get; set; }
-
-    public int CategoryId { get; set; }
-
-    public Category? Category { get; set; }
-    
     public ApplicationUser? User { get; set; }
 
 }

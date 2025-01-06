@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Prikaz Tabele";
+    var tableName = ViewBag.TableName as string;
+}
+
+<h2>Podatki iz tabele: @tableName</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @foreach (var prop in Model.GetType().GetGenericArguments()[0].GetProperties())
+            {
+                <th>@prop.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @foreach (var prop in item.GetType().GetProperties())
+                {
+                    <td>@prop.GetValue(item)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Nazaj</a>

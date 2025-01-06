@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using web.Data;
 
@@ -11,9 +12,11 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(BlagajnaContext))]
-    partial class BlagajnaContextModelSnapshot : ModelSnapshot
+    [Migration("20241224185936_AddIncomeModel")]
+    partial class AddIncomeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,30 +314,6 @@ namespace web.Migrations
                     b.ToTable("Income", (string)null);
                 });
 
-            modelBuilder.Entity("web.Models.Saved", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Saved", (string)null);
-                });
-
             modelBuilder.Entity("web.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -346,7 +325,7 @@ namespace web.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -451,22 +430,11 @@ namespace web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("web.Models.Saved", b =>
-                {
-                    b.HasOne("web.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("web.Models.Transaction", b =>
                 {
                     b.HasOne("web.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("web.Models.ApplicationUser", "User")
                         .WithMany()
